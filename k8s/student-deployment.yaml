@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-v1
+  labels:
+    app: student
+spec:
+  selector:
+    matchLabels:
+      app: student
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: student
+        version: v1
+    spec:
+      containers:
+        - name: student
+          image: student:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

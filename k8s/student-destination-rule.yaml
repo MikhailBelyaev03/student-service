@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: student
+spec:
+  host: student
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 1
+      http:
+        http1MaxPendingRequests: 10
+        maxRequestsPerConnection: 1
+    outlierDetection:
+      consecutiveErrors: 3
+      interval: 1s
+      baseEjectionTime: 3m
+      maxEjectionPercent: 100
